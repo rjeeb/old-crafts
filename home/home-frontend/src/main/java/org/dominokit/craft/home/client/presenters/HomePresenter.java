@@ -27,13 +27,7 @@ public class HomePresenter extends ViewBaseClientPresenter<HomeView> {
 
     @ListenTo(event = MainDominoEvent.class)
     public void listenToMainEvent(MainEventContext context) {
-        history().listen(TokenFilter.startsWith("home"), state -> revealHomePage())
-                .onDirectUrl(state -> revealHomePage());
-
-        if (history().currentToken().path().isEmpty()) {
-            history().pushState("home");
-            ((AppHistory) history()).fireCurrentStateHistory();
-        }
+	revealHomePage();
     }
 
     private void revealHomePage() {

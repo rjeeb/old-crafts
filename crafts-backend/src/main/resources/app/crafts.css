@@ -33,7 +33,7 @@ h1 {
 }
 
 .footer {
-    height: 250px;
+    min-height: 250px;
 }
 
 .footer-list-category {

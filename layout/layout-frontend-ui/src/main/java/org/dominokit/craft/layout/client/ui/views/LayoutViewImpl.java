@@ -14,6 +14,7 @@ import org.dominokit.domino.ui.grid.Row;
 import org.dominokit.domino.ui.grid.Row_12;
 import org.dominokit.domino.ui.icons.Icons;
 import org.dominokit.domino.ui.layout.Layout;
+import org.dominokit.domino.ui.mediaquery.MediaQuery;
 import org.dominokit.domino.ui.style.Color;
 import org.dominokit.domino.ui.style.ColorScheme;
 import org.dominokit.domino.ui.style.Styles;
@@ -54,6 +55,7 @@ public class LayoutViewImpl implements LayoutView {
                 .css(Styles.pull_right)
                 .add(searchTextBox));
         layout.showFooter();
+
         footerRow = Row.create().styler(style -> style.setPadding("20px 200px"));
         layout.getFooter().appendChild(footerRow);
         layout.getFooter().appendChild(Row.create()
@@ -63,6 +65,9 @@ public class LayoutViewImpl implements LayoutView {
                         .appendChild(span().textContent("© 2018 Crafts, Inc."))
                 )
         );
+        MediaQuery.addOnSmallAndDownListener(() -> {
+            footerRow.styler(style -> style.setPadding("20px 0px"));
+        });
     }
 
     private void addActionItem(IsElement element, ActionHandler actionHandler) {

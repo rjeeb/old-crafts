@@ -32,3 +32,5 @@ www-test/
 **/target/*
 
 **/*.iml
+
+**/.vertx/*
