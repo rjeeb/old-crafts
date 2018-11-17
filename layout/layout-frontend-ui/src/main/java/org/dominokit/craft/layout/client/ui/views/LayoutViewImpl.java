@@ -68,6 +68,10 @@ public class LayoutViewImpl implements LayoutView {
         MediaQuery.addOnSmallAndDownListener(() -> {
             footerRow.styler(style -> style.setPadding("20px 0px"));
         });
+
+        MediaQuery.addOnMediumAndUpListener(() -> {
+            footerRow.styler(style -> style.setPadding("20px 200px"));
+        });
     }
 
     private void addActionItem(IsElement element, ActionHandler actionHandler) {
