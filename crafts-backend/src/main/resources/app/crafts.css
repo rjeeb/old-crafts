@@ -157,11 +157,13 @@ h1 {
 .recent-item {
     margin: 5px;
     box-shadow: none;
+    padding: 0px;
 }
 
 .gift-category-item {
     margin: 5px;
     box-shadow: none;
+    padding: 0px;
 }
 
 .review-component {
@@ -187,8 +189,8 @@ h1 {
 }
 
 .review-item-image {
-    height: 300px;
-    width: 300px;
+    height: 100%;
+    width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
     max-width: 100%;
