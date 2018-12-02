@@ -1,8 +1,12 @@
 package org.dominokit.craft.home.shared.model;
 
+import org.dominokit.domino.api.shared.request.ResponseBean;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
+
 import java.util.Date;
 
-public class Review {
+@JSONMapper
+public class Review implements ResponseBean {
     private String userProfileImageUrl;
     private String username;
     private Date creationDate;

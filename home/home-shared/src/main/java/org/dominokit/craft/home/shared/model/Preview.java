@@ -1,7 +1,9 @@
 package org.dominokit.craft.home.shared.model;
 
 import org.dominokit.domino.api.shared.request.ResponseBean;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
 
+@JSONMapper
 public class Preview implements ResponseBean {
 
     private String title;

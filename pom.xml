@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.dominokit.craft</groupId>
@@ -63,9 +64,26 @@
             </dependency>
             <dependency>
                 <groupId>org.dominokit.jackson</groupId>
+                <artifactId>jackson-apt</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <classifier>sources</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.dominokit.jackson</groupId>
                 <artifactId>jackson-apt-processor</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.dominokit.craft</groupId>
+                <artifactId>crafts-shared</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dominokit.craft</groupId>
+                <artifactId>crafts-shared</artifactId>
+                <version>${project.version}</version>
+                <classifier>sources</classifier>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -91,6 +109,20 @@
             <groupId>com.google.auto.service</groupId>
             <artifactId>auto-service</artifactId>
             <version>1.0-rc3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.jackson</groupId>
+            <artifactId>jackson-apt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.jackson</groupId>
+            <artifactId>jackson-apt</artifactId>
+            <classifier>sources</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.jackson</groupId>
+            <artifactId>jackson-apt-processor</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -144,10 +176,12 @@
         </plugins>
 
     </build>
-  <modules>
-    <module>crafts-frontend</module>
-    <module>crafts-backend</module>
-    <module>layout</module>
-    <module>home</module>
-  </modules>
+    <modules>
+        <module>crafts-frontend</module>
+        <module>crafts-backend</module>
+        <module>layout</module>
+        <module>home</module>
+        <module>commons</module>
+        <module>crafts-shared</module>
+    </modules>
 </project>

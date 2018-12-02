@@ -1,8 +1,8 @@
-package org.dominokit.craft.home.client.ui.components;
+package org.dominokit.craft.commons.client.commons;
 
 import elemental2.dom.HTMLDivElement;
 import elemental2.dom.HTMLHeadingElement;
-import org.dominokit.craft.home.shared.model.RecentItem;
+import org.dominokit.craft.shared.model.Item;
 import org.dominokit.domino.ui.Typography.Paragraph;
 import org.dominokit.domino.ui.popover.PopupPosition;
 import org.dominokit.domino.ui.style.Styles;
@@ -12,14 +12,14 @@ import org.dominokit.domino.ui.utils.DominoElement;
 
 import static org.jboss.gwt.elemento.core.Elements.*;
 
-public class RecentItemComponent extends BaseDominoElement<HTMLDivElement, RecentItemComponent> {
+public class ItemComponent extends BaseDominoElement<HTMLDivElement, ItemComponent> {
 
     private Thumbnail element = Thumbnail.create();
     private DominoElement<HTMLHeadingElement> titleParagraph = DominoElement.of(h(4));
     private Paragraph descriptionParagraph = Paragraph.create();
     private DominoElement<HTMLHeadingElement> amountParagraph = DominoElement.of(h(5));
 
-    public RecentItemComponent(RecentItem recentItem) {
+    public ItemComponent(Item recentItem) {
         titleParagraph
                 .styler(style -> style.add(Styles.ellipsis_text))
                 .setTextContent(recentItem.getTitle())
@@ -33,16 +33,16 @@ public class RecentItemComponent extends BaseDominoElement<HTMLDivElement, Recen
                 .styler(style -> style.add(Styles.ellipsis_text))
                 .setTextContent(recentItem.getAmount());
 
-        element.styler(style -> style.add("recent-item"))
+        element.styler(style -> style.add("item"))
                 .setContent(a().add(img(recentItem.getImageUrl())
-                        .css(Styles.img_responsive)))
+                        .css(Styles.img_responsive, "item-image")))
                 .appendCaptionChild(titleParagraph)
                 .appendCaptionChild(descriptionParagraph)
                 .appendCaptionChild(amountParagraph);
     }
 
-    public static RecentItemComponent create(RecentItem recentItem) {
-        return new RecentItemComponent(recentItem);
+    public static ItemComponent create(Item recentItem) {
+        return new ItemComponent(recentItem);
     }
 
     @Override

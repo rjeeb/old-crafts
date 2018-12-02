@@ -16,7 +16,7 @@ public class GiftCategoryComponent extends BaseDominoElement<HTMLDivElement, Gif
     public GiftCategoryComponent(GiftCategory giftCategory) {
         element.styler(style -> style.add("gift-category-item"))
                 .setContent(a().add(img(giftCategory.getImageUrl())
-                        .css(Styles.img_responsive)))
+                        .css(Styles.img_responsive, "gift-category-image")))
                 .appendCaptionChild(DominoElement.of(h(5))
                         .setTextContent(giftCategory.getTitle())
                         .styler(style1 -> style1.add(Styles.ellipsis_text, Styles.font_bold)));

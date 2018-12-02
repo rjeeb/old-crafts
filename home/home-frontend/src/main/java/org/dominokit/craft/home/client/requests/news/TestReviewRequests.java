@@ -2,16 +2,15 @@ package org.dominokit.craft.home.client.requests.news;
 
 import org.dominokit.craft.home.client.requests.TestResponse;
 import org.dominokit.craft.home.shared.model.Review;
-import org.dominokit.craft.home.shared.model.Reviews;
 import org.dominokit.domino.api.client.request.Response;
+import org.dominokit.domino.api.shared.request.ArrayResponse;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class TestReviewRequests implements ReviewRequests {
 
     @Override
-    public Response<Reviews> list() {
+    public Response<ArrayResponse<Review>> list() {
         Review review = new Review();
         review.setUserProfileImageUrl("https://picsum.photos/250/200/?image=1027");
         review.setUsername("Anna");
@@ -39,8 +38,6 @@ public class TestReviewRequests implements ReviewRequests {
         review2.setItemImageUrl("https://picsum.photos/250/200/?image=947");
         review2.setItemTitle("Hand Towel Holder - Bath Towel Holder - Paper Towel Holder");
 
-        Reviews reviews = new Reviews();
-        reviews.getReviews().addAll(Arrays.asList(review, review1, review2));
-        return new TestResponse<>(reviews);
+        return new TestResponse<>(new ArrayResponse<>(new Review[]{review, review1, review2}));
     }
 }

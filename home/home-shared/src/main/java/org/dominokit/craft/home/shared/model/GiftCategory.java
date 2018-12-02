@@ -1,6 +1,10 @@
 package org.dominokit.craft.home.shared.model;
 
-public class GiftCategory {
+import org.dominokit.domino.api.shared.request.ResponseBean;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
+
+@JSONMapper
+public class GiftCategory implements ResponseBean {
     private String title;
     private String imageUrl;
 

@@ -49,7 +49,9 @@ public class LayoutViewImpl implements LayoutView {
         DelayedTextInput.create(searchTextBox.getInputElement(), 200)
                 .setDelayedAction(() -> searchValueConsumer.accept(searchTextBox.getValue()));
         layout.disableLeftPanel();
-        layout.getContentPanel().styler(style -> style.setMarginBottom("100px"));
+        layout.getContentSection().styler(style -> style.setMarginTop("122px"));
+        layout.getContentPanel().styler(style -> style
+                .setMarginBottom("100px"));
         layout.getNavigationBar().getNavigationBar().appendChild(div()
                 .css("search-container")
                 .css(Styles.pull_right)
@@ -72,6 +74,22 @@ public class LayoutViewImpl implements LayoutView {
         MediaQuery.addOnMediumAndUpListener(() -> {
             footerRow.styler(style -> style.setPadding("20px 200px"));
         });
+
+        layout.getNavigationBar().asElement().appendChild(Row.create()
+                .styler(style -> style.add(Color.WHITE.getBackground()))
+                .appendChild(Column.span8()
+                        .offset(2, 0)
+                        .appendChild(new Menu()
+                                .addItem(MenuItem.create("Jewelry & Accessories"))
+                                .addItem(MenuItem.create("Clothing & Shoes"))
+                                .addItem(MenuItem.create("Home & Living"))
+                                .addItem(MenuItem.create("Wedding & Party"))
+                                .addItem(MenuItem.create("Toys & Entertainment"))
+                                .addItem(MenuItem.create("Art & Collectibles"))
+                                .addItem(MenuItem.create("Craft Supplies & Tools"))
+                                .addItem(MenuItem.create("Vintage"))
+                        )
+                ).asElement());
     }
 
     private void addActionItem(IsElement element, ActionHandler actionHandler) {

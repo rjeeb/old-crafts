@@ -1,16 +1,14 @@
 package org.dominokit.craft.home.client.requests.news;
 
 import org.dominokit.craft.home.client.requests.TestResponse;
-import org.dominokit.craft.home.shared.model.GiftCategories;
 import org.dominokit.craft.home.shared.model.GiftCategory;
 import org.dominokit.domino.api.client.request.Response;
-
-import java.util.Arrays;
+import org.dominokit.domino.api.shared.request.ArrayResponse;
 
 public class TestGiftCategoryRequests implements GiftCategoryRequests {
 
     @Override
-    public Response<GiftCategories> list() {
+    public Response<ArrayResponse<GiftCategory>> list() {
         GiftCategory category1 = new GiftCategory();
         category1.setTitle("Anniversary gifts");
         category1.setImageUrl("https://picsum.photos/250/200/?image=815");
@@ -35,8 +33,6 @@ public class TestGiftCategoryRequests implements GiftCategoryRequests {
         category6.setTitle("Housewarming gifts");
         category6.setImageUrl("https://picsum.photos/250/200/?image=534");
 
-        GiftCategories giftCategories = new GiftCategories();
-        giftCategories.getCategories().addAll(Arrays.asList(category1, category2, category3, category4, category5, category6));
-        return new TestResponse<>(giftCategories);
+        return new TestResponse<>(new ArrayResponse<>(new GiftCategory[]{category1, category2, category3, category4, category5, category6}));
     }
 }

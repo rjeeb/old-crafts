@@ -2,10 +2,15 @@ package org.dominokit.craft.home.client.ui.views;
 
 import elemental2.dom.HTMLDivElement;
 import elemental2.dom.HTMLHeadingElement;
+import org.dominokit.craft.commons.client.commons.ItemComponent;
 import org.dominokit.craft.home.client.presenters.HomePresenter;
 import org.dominokit.craft.home.client.ui.components.*;
 import org.dominokit.craft.home.client.views.HomeView;
-import org.dominokit.craft.home.shared.model.*;
+import org.dominokit.craft.home.shared.model.Feature;
+import org.dominokit.craft.home.shared.model.GiftCategory;
+import org.dominokit.craft.home.shared.model.Preview;
+import org.dominokit.craft.home.shared.model.Review;
+import org.dominokit.craft.shared.model.Item;
 import org.dominokit.domino.api.client.annotations.UiView;
 import org.dominokit.domino.ui.grid.Column;
 import org.dominokit.domino.ui.grid.Row;
@@ -113,9 +118,9 @@ public class HomeViewImpl extends BaseElementView<HTMLDivElement> implements Hom
     }
 
     @Override
-    public void addRecentItem(RecentItem recentItem) {
+    public void addRecentItem(Item recentItem) {
         recentItemsRow.appendChild(Column.span2()
-                .appendChild(RecentItemComponent.create(recentItem)));
+                .appendChild(ItemComponent.create(recentItem)));
     }
 
     @Override
@@ -142,7 +147,7 @@ public class HomeViewImpl extends BaseElementView<HTMLDivElement> implements Hom
     @Override
     public void addReview(Review review) {
         reviewsRow.appendChild(Column.span4()
-            .appendChild(ReviewComponent.create(review))
+                .appendChild(ReviewComponent.create(review))
         );
     }
 

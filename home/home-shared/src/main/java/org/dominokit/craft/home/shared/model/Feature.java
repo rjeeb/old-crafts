@@ -1,6 +1,10 @@
 package org.dominokit.craft.home.shared.model;
 
-public class Feature {
+import org.dominokit.domino.api.shared.request.ResponseBean;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
+
+@JSONMapper
+public class Feature implements ResponseBean {
     private String title;
     private String description;
 

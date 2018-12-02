@@ -1,6 +1,10 @@
-package org.dominokit.craft.home.shared.model;
+package org.dominokit.craft.shared.model;
 
-public class RecentItem {
+import org.dominokit.domino.api.shared.request.ResponseBean;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
+
+@JSONMapper
+public class Item implements ResponseBean {
     private String imageUrl;
     private String title;
     private String description;

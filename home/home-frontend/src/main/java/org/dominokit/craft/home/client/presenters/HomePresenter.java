@@ -4,17 +4,15 @@ import org.dominokit.craft.home.client.requests.Requests;
 import org.dominokit.craft.home.client.views.HomeView;
 import org.dominokit.craft.home.shared.model.Feature;
 import org.dominokit.craft.home.shared.model.GiftCategory;
-import org.dominokit.craft.home.shared.model.RecentItem;
 import org.dominokit.craft.home.shared.model.Review;
 import org.dominokit.craft.layout.shared.extension.LayoutContentChangeEvent;
+import org.dominokit.craft.shared.model.Item;
 import org.dominokit.domino.api.client.annotations.ListenTo;
 import org.dominokit.domino.api.client.annotations.Presenter;
 import org.dominokit.domino.api.client.mvp.presenter.ViewBaseClientPresenter;
 import org.dominokit.domino.api.client.mvp.view.DominoView;
 import org.dominokit.domino.api.shared.extension.MainDominoEvent;
 import org.dominokit.domino.api.shared.extension.MainEventContext;
-import org.dominokit.domino.api.shared.history.AppHistory;
-import org.dominokit.domino.api.shared.history.TokenFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +25,7 @@ public class HomePresenter extends ViewBaseClientPresenter<HomeView> {
 
     @ListenTo(event = MainDominoEvent.class)
     public void listenToMainEvent(MainEventContext context) {
-	revealHomePage();
+        revealHomePage();
     }
 
     private void revealHomePage() {
@@ -50,7 +48,7 @@ public class HomePresenter extends ViewBaseClientPresenter<HomeView> {
         Requests.reviewRequests().list()
                 .onSuccess(response -> {
                     view.setReviewHeader("Recent reviews from happy people");
-                    List<Review> reviews = response.getReviews();
+                    List<Review> reviews = response.asList();
                     for (Review review : reviews) {
                         view.addReview(review);
                     }
@@ -64,7 +62,7 @@ public class HomePresenter extends ViewBaseClientPresenter<HomeView> {
         Requests.giftCategoryRequests().list()
                 .onSuccess(response -> {
                     view.setGiftsCategoryHeader("Shop for gifts");
-                    List<GiftCategory> categories = response.getCategories();
+                    List<GiftCategory> categories = response.asList();
                     for (GiftCategory category : categories) {
                         view.addGiftCategory(category);
                     }
@@ -77,8 +75,8 @@ public class HomePresenter extends ViewBaseClientPresenter<HomeView> {
         Requests.recentItemsRequests().list()
                 .onSuccess(response -> {
                     view.setRecentItemsHeader("Recently viewed & more");
-                    List<RecentItem> recentItems = response.getRecentItems();
-                    for (RecentItem recentItem : recentItems) {
+                    List<Item> recentItems = response.asList();
+                    for (Item recentItem : recentItems) {
                         view.addRecentItem(recentItem);
                     }
                 }).onFailed(failedResponse -> {
@@ -89,7 +87,7 @@ public class HomePresenter extends ViewBaseClientPresenter<HomeView> {
     private void fetchFeatures() {
         Requests.featuresRequests().list()
                 .onSuccess(response -> {
-                    List<Feature> features = response.getFeatures();
+                    List<Feature> features = response.asList();
                     for (Feature feature : features) {
                         view.addFeature(feature);
                     }
