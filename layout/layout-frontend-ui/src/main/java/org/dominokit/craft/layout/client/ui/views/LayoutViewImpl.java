@@ -8,6 +8,8 @@ import org.dominokit.craft.layout.client.presenters.LayoutPresenter;
 import org.dominokit.craft.layout.client.views.LayoutView;
 import org.dominokit.domino.api.client.annotations.UiView;
 import org.dominokit.domino.api.shared.extension.Content;
+import org.dominokit.domino.ui.dropdown.DropDownMenu;
+import org.dominokit.domino.ui.dropdown.DropdownAction;
 import org.dominokit.domino.ui.forms.TextBox;
 import org.dominokit.domino.ui.grid.Column;
 import org.dominokit.domino.ui.grid.Row;
@@ -33,6 +35,7 @@ import static org.jboss.gwt.elemento.core.Elements.*;
 public class LayoutViewImpl implements LayoutView {
 
     private final Row_12 footerRow;
+    private final Menu menu;
     private Layout layout = Layout.create("Crafts");
     private TextBox searchTextBox;
     private Consumer<String> searchValueConsumer;
@@ -75,20 +78,12 @@ public class LayoutViewImpl implements LayoutView {
             footerRow.styler(style -> style.setPadding("20px 200px"));
         });
 
+        menu = Menu.create();
         layout.getNavigationBar().asElement().appendChild(Row.create()
                 .styler(style -> style.add(Color.WHITE.getBackground()))
                 .appendChild(Column.span8()
                         .offset(2, 0)
-                        .appendChild(new Menu()
-                                .addItem(MenuItem.create("Jewelry & Accessories"))
-                                .addItem(MenuItem.create("Clothing & Shoes"))
-                                .addItem(MenuItem.create("Home & Living"))
-                                .addItem(MenuItem.create("Wedding & Party"))
-                                .addItem(MenuItem.create("Toys & Entertainment"))
-                                .addItem(MenuItem.create("Art & Collectibles"))
-                                .addItem(MenuItem.create("Craft Supplies & Tools"))
-                                .addItem(MenuItem.create("Vintage"))
-                        )
+                        .appendChild(menu)
                 ).asElement());
     }
 
@@ -141,5 +136,10 @@ public class LayoutViewImpl implements LayoutView {
                 .appendChild(a().attr("href", url)
                         .style("color: white;")
                         .add(li().textContent(itemTitle)).asElement());
+    }
+
+    @Override
+    public void addMenuItem(String menuTitle) {
+        menu.appendChild(MenuItem.create(menuTitle));
     }
 }

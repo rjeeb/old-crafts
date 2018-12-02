@@ -20,6 +20,8 @@ public interface LayoutView extends View {
 
     void addFooterCategoryItem(String category, String itemTitle, String url);
 
+    void addMenuItem(String menuTitle);
+
     @FunctionalInterface
     interface ActionHandler {
         void onActionExecuted();

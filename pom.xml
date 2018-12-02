@@ -171,6 +171,19 @@
                 <inherited>false</inherited>
                 <configuration>
                     <launcherDir>${project.build.directory}/gwt/launcherDir</launcherDir>
+                    <codeserverArgs>
+                        <codeserverArg>-style</codeserverArg>
+                        <codeserverArg>PRETTY</codeserverArg>
+                        <!--<codeserverArg>-port</codeserverArg>-->
+                        <!--<codeserverArg>9875</codeserverArg>-->
+                        <!--<codeserverArg>-bindAddress</codeserverArg>-->
+                        <!--<codeserverArg>172.20.202.67</codeserverArg>-->
+
+                        <codeserverArg>-src</codeserverArg>
+                        <codeserverArg>/home/rjeeb/Development/git/domino-ui/src/main/java</codeserverArg>
+                        <codeserverArg>-src</codeserverArg>
+                        <codeserverArg>/home/rjeeb/Development/git/domino-ui/target/generated-sources/annotations</codeserverArg>
+                    </codeserverArgs>
                 </configuration>
             </plugin>
         </plugins>

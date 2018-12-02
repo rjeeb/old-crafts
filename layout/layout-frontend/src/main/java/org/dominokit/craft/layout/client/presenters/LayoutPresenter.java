@@ -51,6 +51,15 @@ public class LayoutPresenter extends ViewBaseClientPresenter<LayoutView> {
         view.addFooterCategoryItem("Follow Crafts", "Twitter", "url");
         view.addFooterCategoryItem("Follow Crafts", "Pinterest", "url");
         view.addFooterCategoryItem("Follow Crafts", "Instagram", "url");
+
+        view.addMenuItem("Jewelry & Accessories");
+        view.addMenuItem("Clothing & Shoes");
+        view.addMenuItem("Home & Living");
+        view.addMenuItem("Wedding & Party");
+        view.addMenuItem("Toys & Entertainment");
+        view.addMenuItem("Art & Collectibles");
+        view.addMenuItem("Craft Supplies & Tools");
+        view.addMenuItem("Vintage");
     }
 
     @ListenTo(event = MainDominoEvent.class)

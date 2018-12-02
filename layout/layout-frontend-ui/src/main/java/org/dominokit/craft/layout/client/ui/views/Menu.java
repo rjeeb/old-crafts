@@ -1,7 +1,6 @@
 package org.dominokit.craft.layout.client.ui.views;
 
 import elemental2.dom.HTMLDivElement;
-import org.dominokit.domino.ui.grid.flex.FlexItem;
 import org.dominokit.domino.ui.grid.flex.FlexJustifyContent;
 import org.dominokit.domino.ui.grid.flex.FlexLayout;
 import org.dominokit.domino.ui.utils.BaseDominoElement;
@@ -20,7 +19,11 @@ public class Menu extends BaseDominoElement<HTMLDivElement, Menu> {
         element.appendChild(flexLayout);
     }
 
-    public Menu addItem(MenuItem menuItem) {
+    public static Menu create() {
+        return new Menu();
+    }
+
+    public Menu appendChild(MenuItem menuItem) {
         flexLayout.appendChild(menuItem);
         return this;
     }
