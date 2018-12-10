@@ -1,5 +1,6 @@
 package org.dominokit.craft.layout.client.views;
 
+import org.dominokit.craft.shared.model.Category;
 import org.dominokit.domino.api.client.mvp.view.View;
 import org.dominokit.domino.api.shared.extension.Content;
 
@@ -20,7 +21,7 @@ public interface LayoutView extends View {
 
     void addFooterCategoryItem(String category, String itemTitle, String url);
 
-    void addMenuItem(String menuTitle);
+    void addCategory(Category category, Consumer<Category> categorySelectionHandler);
 
     @FunctionalInterface
     interface ActionHandler {

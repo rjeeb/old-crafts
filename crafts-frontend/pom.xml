@@ -130,6 +130,52 @@
             <version>${project.version}</version>
             <classifier>sources</classifier>
         </dependency>
+        <!-- items -->
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>items-frontend</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>items-frontend</artifactId>
+            <version>${project.version}</version>
+            <classifier>sources</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>items-frontend-ui</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>items-frontend-ui</artifactId>
+            <version>${project.version}</version>
+            <classifier>sources</classifier>
+        </dependency>
+        <!-- category -->
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>category-frontend</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>category-frontend</artifactId>
+            <version>${project.version}</version>
+            <classifier>sources</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>category-frontend-ui</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>category-frontend-ui</artifactId>
+            <version>${project.version}</version>
+            <classifier>sources</classifier>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

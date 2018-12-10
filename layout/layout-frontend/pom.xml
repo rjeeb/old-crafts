@@ -59,6 +59,10 @@
             <version>1.0-SNAPSHOT</version>
             <classifier>sources</classifier>
         </dependency>
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>crafts-shared</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -18,6 +18,7 @@ public class MenuItem extends BaseDominoElement<HTMLDivElement, MenuItem> {
     public MenuItem(String content) {
         element.appendChild(li
                 .appendChild(a().css(Styles.vertical_center).textContent(content)));
+        init(this);
     }
 
 

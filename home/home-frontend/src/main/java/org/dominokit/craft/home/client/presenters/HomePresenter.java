@@ -13,6 +13,7 @@ import org.dominokit.domino.api.client.mvp.presenter.ViewBaseClientPresenter;
 import org.dominokit.domino.api.client.mvp.view.DominoView;
 import org.dominokit.domino.api.shared.extension.MainDominoEvent;
 import org.dominokit.domino.api.shared.extension.MainEventContext;
+import org.dominokit.domino.api.shared.history.TokenFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ public class HomePresenter extends ViewBaseClientPresenter<HomeView> {
 
     @ListenTo(event = MainDominoEvent.class)
     public void listenToMainEvent(MainEventContext context) {
+        history().listen(TokenFilter.exactMatch(""), state -> revealHomePage()).onDirectUrl(state -> revealHomePage());
         revealHomePage();
     }
 

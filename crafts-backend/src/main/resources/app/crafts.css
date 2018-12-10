@@ -35,6 +35,7 @@ h1 {
 .menu {
     height: 50px;
     width: 100%;
+    overflow-y: hidden;
 }
 
 .menu-item {
@@ -229,4 +230,12 @@ h1 {
 }
 
 .review-item-title{
+}
+
+.category-title {
+    text-align: left;
+}
+
+.category-content {
+    margin: 20px 200px;
 }

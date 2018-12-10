@@ -1,13 +1,16 @@
 package org.dominokit.craft.layout.client.presenters;
 
 import org.dominokit.craft.layout.client.views.LayoutView;
+import org.dominokit.craft.layout.shared.extension.CategorySelectedEvent;
 import org.dominokit.craft.layout.shared.extension.LayoutContentChangeEvent;
 import org.dominokit.craft.layout.shared.extension.LayoutContentChangeEventContext;
+import org.dominokit.craft.shared.model.Category;
 import org.dominokit.domino.api.client.annotations.ListenTo;
 import org.dominokit.domino.api.client.annotations.Presenter;
 import org.dominokit.domino.api.client.mvp.presenter.ViewBaseClientPresenter;
 import org.dominokit.domino.api.shared.extension.MainDominoEvent;
 import org.dominokit.domino.api.shared.extension.MainEventContext;
+import org.dominokit.domino.api.shared.history.TokenFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,14 +55,31 @@ public class LayoutPresenter extends ViewBaseClientPresenter<LayoutView> {
         view.addFooterCategoryItem("Follow Crafts", "Pinterest", "url");
         view.addFooterCategoryItem("Follow Crafts", "Instagram", "url");
 
-        view.addMenuItem("Jewelry & Accessories");
-        view.addMenuItem("Clothing & Shoes");
-        view.addMenuItem("Home & Living");
-        view.addMenuItem("Wedding & Party");
-        view.addMenuItem("Toys & Entertainment");
-        view.addMenuItem("Art & Collectibles");
-        view.addMenuItem("Craft Supplies & Tools");
-        view.addMenuItem("Vintage");
+
+        addCategory("Jewelry & Accessories", "jewelry-and-accessories");
+        addCategory("Clothing & Shoes", "clothing-and-shoes");
+        addCategory("Home & Living", "home-and-living");
+        addCategory("Wedding & Party", "wedding-and-party");
+        addCategory("Toys & Entertainment", "toys-and-entertainment");
+        addCategory("Art & Collectibles", "art-and-collectibles");
+        addCategory("Craft Supplies & Tools", "craft-supplies-and-tools");
+        addCategory("Vintage", "vintage");
+    }
+
+    private void addCategory(String title, String token) {
+        Category category = new Category(title, "category/" + token);
+        history().listen(TokenFilter.exactPathFilter(category.getToken()), state -> fireCategoryEvent(category))
+                .onDirectUrl(state -> fireCategoryEvent(category));
+        view.addCategory(category, this::onCategorySelected);
+    }
+
+    private void onCategorySelected(Category category) {
+        history().pushState(category.getToken());
+        fireCategoryEvent(category);
+    }
+
+    private void fireCategoryEvent(Category category) {
+        fireEvent(CategorySelectedEvent.class, () -> () -> category);
     }
 
     @ListenTo(event = MainDominoEvent.class)

@@ -6,10 +6,9 @@ import elemental2.dom.HTMLUListElement;
 import jsinterop.base.Js;
 import org.dominokit.craft.layout.client.presenters.LayoutPresenter;
 import org.dominokit.craft.layout.client.views.LayoutView;
+import org.dominokit.craft.shared.model.Category;
 import org.dominokit.domino.api.client.annotations.UiView;
 import org.dominokit.domino.api.shared.extension.Content;
-import org.dominokit.domino.ui.dropdown.DropDownMenu;
-import org.dominokit.domino.ui.dropdown.DropdownAction;
 import org.dominokit.domino.ui.forms.TextBox;
 import org.dominokit.domino.ui.grid.Column;
 import org.dominokit.domino.ui.grid.Row;
@@ -139,7 +138,8 @@ public class LayoutViewImpl implements LayoutView {
     }
 
     @Override
-    public void addMenuItem(String menuTitle) {
-        menu.appendChild(MenuItem.create(menuTitle));
+    public void addCategory(Category category, Consumer<Category> categorySelectionHandler) {
+        menu.appendChild(MenuItem.create(category.getTitle())
+                .addClickListener(evt -> categorySelectionHandler.accept(category)));
     }
 }
