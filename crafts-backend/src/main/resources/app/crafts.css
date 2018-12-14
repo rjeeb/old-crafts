@@ -234,8 +234,24 @@ h1 {
 
 .category-title {
     text-align: left;
+    margin-bottom: 30px;
 }
 
 .category-content {
     margin: 20px 200px;
+}
+
+.category-filter-list {
+    border: 1px solid #bdbdbd;
+    border-radius: 2px;
+    padding: 10px;
+}
+
+.category-filter-section {
+    padding: 10px 10px 10px;
+    border-bottom: 1px solid #bdbdbd;
+}
+
+.category-filter-section:last-child {
+    border-bottom: none;
 }
