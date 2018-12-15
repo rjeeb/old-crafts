@@ -75,7 +75,7 @@
         </dependency>
         <dependency>
             <groupId>org.dominokit.craft</groupId>
-            <artifactId>commons-frontend-ui</artifactId>
+            <artifactId>items-frontend-ui</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

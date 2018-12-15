@@ -14,8 +14,7 @@ public class ShipToCategoryFilterSection extends BaseDominoElement<HTMLElement, 
     public ShipToCategoryFilterSection() {
         element.styler(style -> style.setMargin("0px")
                 .setMarginTop("20px"));
-        element.appendChild(SelectOption.create("JO", "Jordan"))
-                .selectAt(0);
+        element.appendChild(SelectOption.create("JO", "Jordan"));
 
         init(this);
     }
@@ -37,10 +36,20 @@ public class ShipToCategoryFilterSection extends BaseDominoElement<HTMLElement, 
     @Override
     public Filters getFilters() {
         Filters filters = new Filters();
+        if (element.isEmpty()) {
+            return filters;
+        }
         Filter filter = new Filter();
         filter.setName("ship_to");
         filter.setValue(element.getValue());
         filters.addFilter("Ship to: " + element.getSelectedOption().getKey(), filter);
         return filters;
+    }
+
+    @Override
+    public void unSelectFilter(String filter) {
+        if (!element.isEmpty() && filter.equals("Ship to: " + element.getSelectedOption().getKey())) {
+            element.clear();
+        }
     }
 }

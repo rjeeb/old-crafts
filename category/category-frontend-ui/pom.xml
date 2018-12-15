@@ -73,6 +73,12 @@
             <artifactId>category-frontend</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.dominokit.craft</groupId>
+            <artifactId>items-frontend-ui</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -79,4 +79,17 @@ public class ShippingCategoryFilterSection extends BaseDominoElement<HTMLElement
         }
         return filters;
     }
+
+    @Override
+    public void unSelectFilter(String filter) {
+        if (freeShipping.getLabel().equals(filter)) {
+            freeShipping.uncheck();
+        }
+        if (maxProcessing1Day.getLabel().equals(filter)) {
+            maxProcessing1Day.uncheck();
+        }
+        if (maxProcessing3Days.getLabel().equals(filter)) {
+            maxProcessing3Days.uncheck();
+        }
+    }
 }

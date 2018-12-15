@@ -1,11 +1,10 @@
-package org.dominokit.craft.home.client.requests.news;
+package org.dominokit.craft.category.client.requests;
 
-import org.dominokit.craft.home.client.requests.TestResponse;
 import org.dominokit.craft.items.shared.model.Item;
 import org.dominokit.domino.api.client.request.Response;
 import org.dominokit.domino.api.shared.request.ArrayResponse;
 
-public class TestRecentItemRequests implements RecentItemRequests {
+public class TestCategoryRequests implements CategoryRequests {
 
     @Override
     public Response<ArrayResponse<Item>> list() {

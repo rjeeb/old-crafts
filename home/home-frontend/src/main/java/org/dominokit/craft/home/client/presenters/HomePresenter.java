@@ -5,15 +5,14 @@ import org.dominokit.craft.home.client.views.HomeView;
 import org.dominokit.craft.home.shared.model.Feature;
 import org.dominokit.craft.home.shared.model.GiftCategory;
 import org.dominokit.craft.home.shared.model.Review;
+import org.dominokit.craft.items.shared.model.Item;
 import org.dominokit.craft.layout.shared.extension.LayoutContentChangeEvent;
-import org.dominokit.craft.shared.model.Item;
 import org.dominokit.domino.api.client.annotations.ListenTo;
 import org.dominokit.domino.api.client.annotations.Presenter;
 import org.dominokit.domino.api.client.mvp.presenter.ViewBaseClientPresenter;
 import org.dominokit.domino.api.client.mvp.view.DominoView;
 import org.dominokit.domino.api.shared.extension.MainDominoEvent;
 import org.dominokit.domino.api.shared.extension.MainEventContext;
-import org.dominokit.domino.api.shared.history.TokenFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +25,6 @@ public class HomePresenter extends ViewBaseClientPresenter<HomeView> {
 
     @ListenTo(event = MainDominoEvent.class)
     public void listenToMainEvent(MainEventContext context) {
-        history().listen(TokenFilter.exactMatch(""), state -> revealHomePage()).onDirectUrl(state -> revealHomePage());
         revealHomePage();
     }
 

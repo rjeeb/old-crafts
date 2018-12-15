@@ -1,8 +1,8 @@
-package org.dominokit.craft.commons.client.commons;
+package org.dominokit.craft.items.client.ui.component;
 
 import elemental2.dom.HTMLDivElement;
 import elemental2.dom.HTMLHeadingElement;
-import org.dominokit.craft.shared.model.Item;
+import org.dominokit.craft.items.shared.model.Item;
 import org.dominokit.domino.ui.Typography.Paragraph;
 import org.dominokit.domino.ui.popover.PopupPosition;
 import org.dominokit.domino.ui.style.Styles;

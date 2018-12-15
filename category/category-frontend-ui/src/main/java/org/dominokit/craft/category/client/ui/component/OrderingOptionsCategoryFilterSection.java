@@ -64,6 +64,19 @@ public class OrderingOptionsCategoryFilterSection extends BaseDominoElement<HTML
         return filters;
     }
 
+    @Override
+    public void unSelectFilter(String filter) {
+        if (acceptCraftsGiftCards.getLabel().equals(filter)) {
+            acceptCraftsGiftCards.uncheck();
+        }
+        if (customizable.getLabel().equals(filter)) {
+            customizable.uncheck();
+        }
+        if (canBeGiftWrapped.getLabel().equals(filter)) {
+            canBeGiftWrapped.uncheck();
+        }
+    }
+
     public static OrderingOptionsCategoryFilterSection create() {
         return new OrderingOptionsCategoryFilterSection();
     }

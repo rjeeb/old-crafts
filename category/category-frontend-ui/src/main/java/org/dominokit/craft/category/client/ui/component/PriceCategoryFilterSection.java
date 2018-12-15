@@ -104,10 +104,9 @@ public class PriceCategoryFilterSection extends BaseDominoElement<HTMLElement, P
     @Override
     public Filters getFilters() {
         Filters filters = new Filters();
-        Radio selectedRadio = element.getSelectedRadio();
-        if (selectedRadio.getValue().equals("any")) {
+        if (isAny()) {
             return filters;
-        } else if (selectedRadio.getValue().equals("custom")) {
+        } else if (isCustom()) {
             Filter lowPriceFilter = new Filter();
             lowPriceFilter.setName("min");
             lowPriceFilter.setValue(lowPriceBox.getStringValue());
@@ -116,11 +115,12 @@ public class PriceCategoryFilterSection extends BaseDominoElement<HTMLElement, P
             highPriceFilter.setName("max");
             highPriceFilter.setValue(highPriceBox.getStringValue());
 
-            String filterName = "USD " + lowPriceBox.getStringValue() + " - USD " + highPriceBox.getStringValue();
+            String filterName = getCustomFilterName();
 
             filters.addFilter(filterName, lowPriceFilter);
             filters.addFilter(filterName, highPriceFilter);
         } else {
+            Radio selectedRadio = element.getSelectedRadio();
             PriceValue priceValue = prices.get(selectedRadio.getValue());
             if (priceValue.min > 0) {
                 Filter lowPriceFilter = new Filter();
@@ -136,6 +136,29 @@ public class PriceCategoryFilterSection extends BaseDominoElement<HTMLElement, P
             }
         }
         return filters;
+    }
+
+    @Override
+    public void unSelectFilter(String filterName) {
+        if (isCustom()) {
+            if (getCustomFilterName().equals(filterName)) {
+                element.setValue("any");
+            }
+        } else if (element.getSelectedRadio().getLabel().equals(filterName)) {
+            element.setValue("any");
+        }
+    }
+
+    private String getCustomFilterName() {
+        return "USD " + lowPriceBox.getStringValue() + " - USD " + highPriceBox.getStringValue();
+    }
+
+    private boolean isAny() {
+        return element.getSelectedRadio().getValue().equals("any");
+    }
+
+    private boolean isCustom() {
+        return element.getSelectedRadio().getValue().equals("custom");
     }
 
     private class PriceValue {

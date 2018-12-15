@@ -1,4 +1,4 @@
-package org.dominokit.craft.shared.model;
+package org.dominokit.craft.items.shared.model;
 
 import org.dominokit.domino.api.shared.request.ResponseBean;
 import org.dominokit.jacksonapt.annotation.JSONMapper;

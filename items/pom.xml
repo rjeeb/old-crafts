@@ -42,5 +42,6 @@
     <module>items-frontend-ui</module>
     <module>items-shared</module>
     <module>items-backend</module>
+      <module>items-domain</module>
   </modules>
 </project>

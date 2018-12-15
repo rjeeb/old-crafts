@@ -10,6 +10,8 @@ public interface CategoryFilterSection extends IsElement<HTMLElement> {
 
     Filters getFilters();
 
+    void unSelectFilter(String filter);
+
     interface FilterChangeHandler {
         void onFilterChanged();
     }

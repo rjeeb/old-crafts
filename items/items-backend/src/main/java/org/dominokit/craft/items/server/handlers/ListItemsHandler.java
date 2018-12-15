@@ -1,14 +1,21 @@
-package org.dominokit.craft.home.client.requests.news;
+package org.dominokit.craft.items.server.handlers;
 
-import org.dominokit.craft.home.client.requests.TestResponse;
 import org.dominokit.craft.items.shared.model.Item;
-import org.dominokit.domino.api.client.request.Response;
+import org.dominokit.domino.api.server.context.ExecutionContext;
+import org.dominokit.domino.api.server.handler.Handler;
+import org.dominokit.domino.api.server.handler.RequestHandler;
+import org.dominokit.domino.api.server.request.MultiMap;
 import org.dominokit.domino.api.shared.request.ArrayResponse;
+import org.dominokit.domino.api.shared.request.VoidRequest;
 
-public class TestRecentItemRequests implements RecentItemRequests {
-
+@Handler("items")
+public class ListItemsHandler implements RequestHandler<VoidRequest, ArrayResponse<Item>> {
     @Override
-    public Response<ArrayResponse<Item>> list() {
+    public void handleRequest(ExecutionContext<VoidRequest, ArrayResponse<Item>> executionContext) {
+        MultiMap<String, String> parameters = executionContext.parameters();
+        parameters.forEach(stringStringEntry -> {
+            System.out.println(stringStringEntry.getKey() + " " + stringStringEntry.getValue());
+        });
         Item Item = new Item();
         Item.setImageUrl("https://picsum.photos/250/200/?image=998");
         Item.setTitle("Personalized Gift for Mom Custom Coordinates Bracelet Engraved Bracelets For Women Personalized bracelet - 12 BR");
@@ -33,6 +40,8 @@ public class TestRecentItemRequests implements RecentItemRequests {
         Item3.setDescription("MignonandMignon");
         Item3.setAmount("USD 14.50");
 
-        return new TestResponse<>(new ArrayResponse<>(new Item[]{Item, Item1, Item2, Item3}));
+        ArrayResponse<Item> response = new ArrayResponse<>();
+        response.setItems(new Item[]{Item, Item1, Item2, Item3});
+        executionContext.end(response);
     }
 }

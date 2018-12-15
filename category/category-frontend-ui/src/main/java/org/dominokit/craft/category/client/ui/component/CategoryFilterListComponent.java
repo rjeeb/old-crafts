@@ -48,4 +48,8 @@ public class CategoryFilterListComponent extends BaseDominoElement<HTMLElement, 
     public HTMLElement asElement() {
         return element.asElement();
     }
+
+    public void unSelectFilter(String filter) {
+        filterSections.forEach(filterSection -> filterSection.unSelectFilter(filter));
+    }
 }

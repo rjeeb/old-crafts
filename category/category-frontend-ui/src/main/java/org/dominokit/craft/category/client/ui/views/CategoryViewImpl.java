@@ -5,20 +5,21 @@ import elemental2.dom.HTMLHeadingElement;
 import org.dominokit.craft.category.client.presenters.CategoryPresenter;
 import org.dominokit.craft.category.client.ui.component.*;
 import org.dominokit.craft.category.client.views.CategoryView;
-import org.dominokit.craft.shared.model.Filter;
-import org.dominokit.craft.shared.model.Filters;
+import org.dominokit.craft.items.client.ui.component.ItemComponent;
+import org.dominokit.craft.items.shared.model.Item;
 import org.dominokit.domino.api.client.annotations.UiView;
 import org.dominokit.domino.ui.chips.Chip;
 import org.dominokit.domino.ui.grid.Column;
 import org.dominokit.domino.ui.grid.Row;
 import org.dominokit.domino.ui.grid.flex.FlexItem;
 import org.dominokit.domino.ui.grid.flex.FlexLayout;
-import org.dominokit.domino.ui.style.ColorScheme;
+import org.dominokit.domino.ui.grid.flex.FlexWrap;
+import org.dominokit.domino.ui.themes.Theme;
 import org.dominokit.domino.ui.utils.DominoElement;
 import org.dominokit.domino.view.BaseElementView;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import static org.jboss.gwt.elemento.core.Elements.div;
 import static org.jboss.gwt.elemento.core.Elements.h;
@@ -27,12 +28,16 @@ import static org.jboss.gwt.elemento.core.Elements.h;
 public class CategoryViewImpl extends BaseElementView<HTMLDivElement> implements CategoryView {
 
     private DominoElement<HTMLHeadingElement> titleElement;
+    private CategoryViewUiHandlers uiHandlers;
+    private FlexLayout filtersFlexLayout;
+    private CategoryFilterListComponent categoryFilterListComponent;
+    private FlexLayout itemsFlexLayout;
 
     @Override
     public void init(HTMLDivElement root) {
         titleElement = DominoElement.of(h(1)).addCss("category-title");
 
-        CategoryFilterListComponent categoryFilterListComponent = CategoryFilterListComponent.create()
+        categoryFilterListComponent = CategoryFilterListComponent.create()
                 .addFilterSection(ShippingCategoryFilterSection.create())
                 .addFilterSection(ShopLocationCategoryFilterSection.create())
                 .addFilterSection(ItemTypeCategoryFilterSection.create())
@@ -40,7 +45,10 @@ public class CategoryViewImpl extends BaseElementView<HTMLDivElement> implements
                 .addFilterSection(OrderingOptionsCategoryFilterSection.create())
                 .addFilterSection(ShipToCategoryFilterSection.create());
 
-        FlexLayout filtersFlexLayout = FlexLayout.create();
+        filtersFlexLayout = FlexLayout.create()
+                .setWrap(FlexWrap.WRAP_TOP_TO_BOTTOM);
+        itemsFlexLayout = FlexLayout.create()
+                .setWrap(FlexWrap.WRAP_TOP_TO_BOTTOM);
         DominoElement.of(root)
                 .addCss("category-content")
                 .appendChild(titleElement.asElement())
@@ -52,21 +60,12 @@ public class CategoryViewImpl extends BaseElementView<HTMLDivElement> implements
                                 .appendChild(div()
                                         .add(filtersFlexLayout)
                                 )
+                                .appendChild(itemsFlexLayout)
                         )
                 );
 
         categoryFilterListComponent.onFilterChanged(filters -> {
-            filtersFlexLayout.clearElement();
-            for (Filters secionFilters : filters) {
-                for (Map.Entry<String, List<Filter>> filterEntry : secionFilters.getFilters().entrySet()) {
-                    filtersFlexLayout
-                            .appendChild(FlexItem.create()
-                                    .appendChild(Chip.create(filterEntry.getKey())
-                                            .setColorScheme(ColorScheme.BLACK)
-                                            .setRemovable(true))
-                            );
-                }
-            }
+            uiHandlers.onFiltersChanged(filters);
         });
     }
 
@@ -78,5 +77,36 @@ public class CategoryViewImpl extends BaseElementView<HTMLDivElement> implements
     @Override
     public void setTitle(String title) {
         titleElement.setTextContent(title);
+    }
+
+    @Override
+    public void viewFilters(Collection<String> filtersNames) {
+        filtersFlexLayout.clearElement();
+        filtersNames.forEach(filterName -> filtersFlexLayout
+                .appendChild(FlexItem.create()
+                        .appendChild(Chip.create(filterName)
+                                .setColorScheme(Theme.currentTheme.getScheme())
+                                .setRemovable(true)
+                                .addRemoveHandler(() -> uiHandlers.onFilterRemoved(filterName)))
+                ));
+    }
+
+    @Override
+    public void unSelectFilter(String filter) {
+        categoryFilterListComponent.unSelectFilter(filter);
+    }
+
+    @Override
+    public void setItems(List<Item> items) {
+        for (Item item : items) {
+            itemsFlexLayout.appendChild(FlexItem.create()
+                    .styler(style -> style.setWidth("250px"))
+                    .appendChild(ItemComponent.create(item)));
+        }
+    }
+
+    @Override
+    public void setUiHandlers(CategoryViewUiHandlers uiHandlers) {
+        this.uiHandlers = uiHandlers;
     }
 }

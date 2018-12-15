@@ -12,6 +12,8 @@ import org.dominokit.domino.ui.utils.BaseDominoElement;
 
 public class ShopLocationCategoryFilterSection extends BaseDominoElement<HTMLElement, ShopLocationCategoryFilterSection> implements CategoryFilterSection {
 
+    private static final String ANYWHERE = "anywhere";
+    private static final String CUSTOM = "custom";
     private final SuggestBox locationSuggestBox;
     private RadioGroup element = RadioGroup.create("shop-location", "Shop location");
     private FilterChangeHandler filterChangeHandler;
@@ -20,11 +22,11 @@ public class ShopLocationCategoryFilterSection extends BaseDominoElement<HTMLEle
         element.styler(style -> style.setMargin("0px")
                 .setMarginTop("20px"));
         locationSuggestBox = SuggestBox.create(LocalSuggestBoxStore.create());
-        element.appendChild(Radio.create("anywhere", "Anywhere").styler(style -> style.setMargin("0px"))
+        element.appendChild(Radio.create(ANYWHERE, "Anywhere").styler(style -> style.setMargin("0px"))
                 .check())
                 .appendChild(Radio.create("jordan", "Jordan")
                         .styler(style -> style.setMargin("0px")))
-                .appendChild(Radio.create("custom", "Custom")
+                .appendChild(Radio.create(CUSTOM, "Custom")
                         .appendChild(locationSuggestBox
                                 .styler(style -> style.setMargin("0px"))
                                 .setPlaceholder("Enter location")
@@ -53,7 +55,7 @@ public class ShopLocationCategoryFilterSection extends BaseDominoElement<HTMLEle
     public void onFilterChanged(FilterChangeHandler filterChangeHandler) {
         this.filterChangeHandler = filterChangeHandler;
         element.addChangeHandler(value -> {
-            if (!value.getValue().equals("custom")) {
+            if (!value.getValue().equals(CUSTOM)) {
                 filterChangeHandler.onFilterChanged();
             }
         });
@@ -62,18 +64,45 @@ public class ShopLocationCategoryFilterSection extends BaseDominoElement<HTMLEle
     @Override
     public Filters getFilters() {
         Filters filters = new Filters();
-        Radio selectedRadio = element.getSelectedRadio();
         Filter filter = new Filter();
         filter.setName("ship_location");
-        if (selectedRadio.getValue().equals("anywhere")) {
+        if (isAnywhere()) {
             return filters;
-        } else if (selectedRadio.getValue().equals("custom")) {
+        } else if (isCustom()) {
             filter.setValue(locationSuggestBox.getValue());
-            filters.addFilter("Shop location: " + locationSuggestBox.getValue(), filter);
+            filters.addFilter(getCustomFilterName(), filter);
         } else {
-            filter.setValue(selectedRadio.getValue());
-            filters.addFilter("Shop location: " + selectedRadio.getLabel(), filter);
+            filter.setValue(element.getSelectedRadio().getValue());
+            filters.addFilter(getFilterName(), filter);
         }
         return filters;
+    }
+
+    private String getCustomFilterName() {
+        return "Shop location: " + locationSuggestBox.getValue();
+    }
+
+    private boolean isCustom() {
+        return element.getSelectedRadio().getValue().equals(CUSTOM);
+    }
+
+    private boolean isAnywhere() {
+        return element.getSelectedRadio().getValue().equals("anywhere");
+    }
+
+    @Override
+    public void unSelectFilter(String filter) {
+        if (isCustom()) {
+            if ((getCustomFilterName()).equals(filter)) {
+                locationSuggestBox.clear();
+                element.setValue("anywhere");
+            }
+        } else if (getFilterName().equals(filter)) {
+            element.setValue("anywhere");
+        }
+    }
+
+    private String getFilterName() {
+        return "Shop location: " + element.getSelectedRadio().getLabel();
     }
 }

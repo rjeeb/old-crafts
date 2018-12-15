@@ -2,7 +2,6 @@ package org.dominokit.craft.home.client.ui.views;
 
 import elemental2.dom.HTMLDivElement;
 import elemental2.dom.HTMLHeadingElement;
-import org.dominokit.craft.commons.client.commons.ItemComponent;
 import org.dominokit.craft.home.client.presenters.HomePresenter;
 import org.dominokit.craft.home.client.ui.components.*;
 import org.dominokit.craft.home.client.views.HomeView;
@@ -10,7 +9,8 @@ import org.dominokit.craft.home.shared.model.Feature;
 import org.dominokit.craft.home.shared.model.GiftCategory;
 import org.dominokit.craft.home.shared.model.Preview;
 import org.dominokit.craft.home.shared.model.Review;
-import org.dominokit.craft.shared.model.Item;
+import org.dominokit.craft.items.client.ui.component.ItemComponent;
+import org.dominokit.craft.items.shared.model.Item;
 import org.dominokit.domino.api.client.annotations.UiView;
 import org.dominokit.domino.ui.grid.Column;
 import org.dominokit.domino.ui.grid.Row;

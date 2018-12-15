@@ -41,6 +41,13 @@ public class ItemTypeCategoryFilterSection extends BaseDominoElement<HTMLElement
         return filters;
     }
 
+    @Override
+    public void unSelectFilter(String filter) {
+        if (element.getSelectedRadio().getLabel().equals(filter)) {
+            element.setValue("all");
+        }
+    }
+
     public static ItemTypeCategoryFilterSection create() {
         return new ItemTypeCategoryFilterSection();
     }
