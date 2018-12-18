@@ -10,7 +10,7 @@ import org.dominokit.craft.home.shared.model.GiftCategory;
 import org.dominokit.craft.home.shared.model.Preview;
 import org.dominokit.craft.home.shared.model.Review;
 import org.dominokit.craft.items.client.ui.component.ItemComponent;
-import org.dominokit.craft.items.shared.model.Item;
+import org.dominokit.craft.items.shared.model.ItemResource;
 import org.dominokit.domino.api.client.annotations.UiView;
 import org.dominokit.domino.ui.grid.Column;
 import org.dominokit.domino.ui.grid.Row;
@@ -118,9 +118,9 @@ public class HomeViewImpl extends BaseElementView<HTMLDivElement> implements Hom
     }
 
     @Override
-    public void addRecentItem(Item recentItem) {
+    public void addRecentItem(ItemResource recentItemResource) {
         recentItemsRow.appendChild(Column.span2()
-                .appendChild(ItemComponent.create(recentItem)));
+                .appendChild(ItemComponent.create(recentItemResource)));
     }
 
     @Override

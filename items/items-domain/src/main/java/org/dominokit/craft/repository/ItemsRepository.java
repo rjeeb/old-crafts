@@ -5,7 +5,7 @@ import org.dominokit.craft.model.Item;
 import java.util.List;
 
 public interface ItemsRepository {
-    void save(Item item);
+    Item save(Item item);
 
-    List<Item> getAll();
+    List<Item> findAll();
 }

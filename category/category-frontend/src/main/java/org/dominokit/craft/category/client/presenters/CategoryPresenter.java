@@ -2,7 +2,7 @@ package org.dominokit.craft.category.client.presenters;
 
 import org.dominokit.craft.category.client.requests.Requests;
 import org.dominokit.craft.category.client.views.CategoryView;
-import org.dominokit.craft.items.shared.model.Item;
+import org.dominokit.craft.items.shared.model.ItemResource;
 import org.dominokit.craft.layout.shared.extension.CategorySelectedEvent;
 import org.dominokit.craft.layout.shared.extension.CategorySelectedEventContext;
 import org.dominokit.craft.layout.shared.extension.LayoutContentChangeEvent;
@@ -47,15 +47,15 @@ public class CategoryPresenter extends ViewBaseClientPresenter<CategoryView> imp
         Requests.categoryRequests()
                 .list()
                 .onSuccess(response -> {
-                    List<Item> items = response.asList();
-                    view.setItems(items);
-                    view.setItems(items);
-                    view.setItems(items);
-                    view.setItems(items);
-                    view.setItems(items);
-                    view.setItems(items);
-                    view.setItems(items);
-                    view.setItems(items);
+                    List<ItemResource> itemResources = response.getItems();
+                    view.setItems(itemResources);
+                    view.setItems(itemResources);
+                    view.setItems(itemResources);
+                    view.setItems(itemResources);
+                    view.setItems(itemResources);
+                    view.setItems(itemResources);
+                    view.setItems(itemResources);
+                    view.setItems(itemResources);
                 })
                 .onFailed(failedResponse -> {
 

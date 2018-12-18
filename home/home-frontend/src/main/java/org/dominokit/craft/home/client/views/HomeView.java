@@ -4,7 +4,7 @@ import org.dominokit.craft.home.shared.model.Feature;
 import org.dominokit.craft.home.shared.model.GiftCategory;
 import org.dominokit.craft.home.shared.model.Preview;
 import org.dominokit.craft.home.shared.model.Review;
-import org.dominokit.craft.items.shared.model.Item;
+import org.dominokit.craft.items.shared.model.ItemResource;
 import org.dominokit.domino.api.client.mvp.view.ContentView;
 
 public interface HomeView extends ContentView {
@@ -14,7 +14,7 @@ public interface HomeView extends ContentView {
 
     void addFeature(Feature feature);
 
-    void addRecentItem(Item recentItem);
+    void addRecentItem(ItemResource recentItemResource);
 
     void setRecentItemsHeader(String recentItemsHeader);
 

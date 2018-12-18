@@ -5,7 +5,7 @@ import org.dominokit.craft.home.client.views.HomeView;
 import org.dominokit.craft.home.shared.model.Feature;
 import org.dominokit.craft.home.shared.model.GiftCategory;
 import org.dominokit.craft.home.shared.model.Review;
-import org.dominokit.craft.items.shared.model.Item;
+import org.dominokit.craft.items.shared.model.ItemResource;
 import org.dominokit.craft.layout.shared.extension.LayoutContentChangeEvent;
 import org.dominokit.domino.api.client.annotations.ListenTo;
 import org.dominokit.domino.api.client.annotations.Presenter;
@@ -75,9 +75,9 @@ public class HomePresenter extends ViewBaseClientPresenter<HomeView> {
         Requests.recentItemsRequests().list()
                 .onSuccess(response -> {
                     view.setRecentItemsHeader("Recently viewed & more");
-                    List<Item> recentItems = response.asList();
-                    for (Item recentItem : recentItems) {
-                        view.addRecentItem(recentItem);
+                    List<ItemResource> recentItemResources = response.asList();
+                    for (ItemResource recentItemResource : recentItemResources) {
+                        view.addRecentItem(recentItemResource);
                     }
                 }).onFailed(failedResponse -> {
 

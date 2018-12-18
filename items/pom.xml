@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <artifactId>crafts</artifactId>
-    <groupId>org.dominokit.craft</groupId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
+        <artifactId>crafts</artifactId>
+        <groupId>org.dominokit.craft</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
     <artifactId>items</artifactId>
     <packaging>pom</packaging>
@@ -37,11 +38,12 @@
         </plugins>
     </build>
 
-  <modules>
-    <module>items-frontend</module>
-    <module>items-frontend-ui</module>
-    <module>items-shared</module>
-    <module>items-backend</module>
-      <module>items-domain</module>
-  </modules>
+    <modules>
+        <module>items-frontend</module>
+        <module>items-frontend-ui</module>
+        <module>items-shared</module>
+        <module>items-backend</module>
+        <module>items-domain</module>
+        <module>items-repository</module>
+    </modules>
 </project>
