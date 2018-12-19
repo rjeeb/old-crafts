@@ -16,8 +16,6 @@ public class ItemPhotosSection extends BaseDominoElement<HTMLDivElement, ItemPho
     private DominoElement<HTMLDivElement> element = DominoElement.div();
 
     public ItemPhotosSection() {
-        init(this);
-
         element.appendChild(Card.create("Photos", "Add as many as you can so buyers can see every detail.")
                 .appendChild(Row.create()
                         .appendChild(Column.span3()
@@ -42,6 +40,7 @@ public class ItemPhotosSection extends BaseDominoElement<HTMLDivElement, ItemPho
                 )
 
         );
+        init(this);
     }
 
     @Override

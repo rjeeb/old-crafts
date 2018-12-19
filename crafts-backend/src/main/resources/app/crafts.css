@@ -255,3 +255,7 @@ h1 {
 .category-filter-section:last-child {
     border-bottom: none;
 }
+
+.items-tag .tag-text-input {
+    min-width: 200px;
+}

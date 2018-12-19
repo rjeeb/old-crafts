@@ -9,11 +9,13 @@ public class ItemForm extends BaseDominoElement<HTMLDivElement, ItemForm> {
     private DominoElement<HTMLDivElement> element = DominoElement.div();
     private ItemPhotosSection itemPhotosSection = new ItemPhotosSection();
     private ItemDetailsSection itemDetailsSection = new ItemDetailsSection();
+    private InventoryAndPricingSection inventoryAndPricingSection = new InventoryAndPricingSection();
 
     public ItemForm() {
-        init(this);
         element.appendChild(itemPhotosSection)
-                .appendChild(itemDetailsSection);
+                .appendChild(itemDetailsSection)
+                .appendChild(inventoryAndPricingSection);
+        init(this);
     }
 
     @Override

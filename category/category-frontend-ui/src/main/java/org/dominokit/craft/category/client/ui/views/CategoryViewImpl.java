@@ -55,31 +55,35 @@ public class CategoryViewImpl extends BaseElementView<HTMLDivElement> implements
         itemsFlexLayout = FlexLayout.create()
                 .setWrap(FlexWrap.WRAP_TOP_TO_BOTTOM);
 
+//        DominoElement.of(root)
+//                .addCss("category-content")
+//                .appendChild(Row.create()
+//                        .appendChild(Column.span10()
+//                                .offset1()
+//                                .appendChild(titleElement.asElement())
+//                                .appendChild(Button.createDefault("ADD ITEM")
+//                                        .addClickListener(evt -> {
+//                                            DominoElement.of(root)
+//                                                    .clearElement()
+//                                                    .appendChild(new ItemForm());
+//                                        }))
+//                                .appendChild(Row.create()
+//                                        .appendChild(Column.span3()
+//                                                .appendChild(categoryFilterListComponent)
+//                                        )
+//                                        .appendChild(Column.span9()
+//                                                .appendChild(itemsContainer
+//                                                        .add(filtersFlexLayout)
+//                                                )
+//                                                .appendChild(itemsFlexLayout)
+//                                        )
+//                                )
+//                        )
+//                );
+
         DominoElement.of(root)
-                .addCss("category-content")
-                .appendChild(Row.create()
-                        .appendChild(Column.span10()
-                                .offset1()
-                                .appendChild(titleElement.asElement())
-                                .appendChild(Button.createDefault("ADD ITEM")
-                                        .addClickListener(evt -> {
-                                            DominoElement.of(root)
-                                                    .clearElement()
-                                                    .appendChild(new ItemForm());
-                                        }))
-                                .appendChild(Row.create()
-                                        .appendChild(Column.span3()
-                                                .appendChild(categoryFilterListComponent)
-                                        )
-                                        .appendChild(Column.span9()
-                                                .appendChild(itemsContainer
-                                                        .add(filtersFlexLayout)
-                                                )
-                                                .appendChild(itemsFlexLayout)
-                                        )
-                                )
-                        )
-                );
+                .clearElement()
+                .appendChild(new ItemForm());
 
         categoryFilterListComponent.onFilterChanged(filters -> {
             uiHandlers.onFiltersChanged(filters);
