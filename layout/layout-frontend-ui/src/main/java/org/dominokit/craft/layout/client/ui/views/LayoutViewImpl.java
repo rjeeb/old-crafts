@@ -9,6 +9,7 @@ import org.dominokit.craft.layout.client.views.LayoutView;
 import org.dominokit.craft.shared.model.Category;
 import org.dominokit.domino.api.client.annotations.UiView;
 import org.dominokit.domino.api.shared.extension.Content;
+import org.dominokit.domino.ui.button.Button;
 import org.dominokit.domino.ui.forms.TextBox;
 import org.dominokit.domino.ui.grid.Column;
 import org.dominokit.domino.ui.grid.Row;
@@ -39,6 +40,7 @@ public class LayoutViewImpl implements LayoutView {
     private TextBox searchTextBox;
     private Consumer<String> searchValueConsumer;
     private Map<String, HTMLUListElement> footerCategories = new HashMap<>();
+    private LayoutViewUiHandlers uiHandlers;
 
     public LayoutViewImpl() {
         DominoElement.of(DomGlobal.document.body)
@@ -80,6 +82,17 @@ public class LayoutViewImpl implements LayoutView {
         menu = Menu.create();
         layout.getNavigationBar().asElement().appendChild(Row.create()
                 .styler(style -> style.add(Color.WHITE.getBackground()))
+                .appendChild(Column.span12()
+                        .appendChild(Row.create()
+                                .appendChild(Column.span12()
+                                        .appendChild(Button.createDefault("ADD ITEM")
+                                                .addClickListener(evt -> {
+                                                    uiHandlers.onNewItemRequested();
+                                                })
+                                        )
+                                )
+                        )
+                )
                 .appendChild(Column.span8()
                         .offset(2, 0)
                         .appendChild(menu)
@@ -141,5 +154,10 @@ public class LayoutViewImpl implements LayoutView {
     public void addCategory(Category category, Consumer<Category> categorySelectionHandler) {
         menu.appendChild(MenuItem.create(category.getTitle())
                 .addClickListener(evt -> categorySelectionHandler.accept(category)));
+    }
+
+    @Override
+    public void setUiHandlers(LayoutViewUiHandlers uiHandlers) {
+        this.uiHandlers = uiHandlers;
     }
 }

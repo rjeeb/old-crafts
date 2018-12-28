@@ -8,4 +8,6 @@ public interface ItemsRepository {
     Item save(Item item);
 
     List<Item> findAll();
+
+    Item findByTitle(String title);
 }

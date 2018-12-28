@@ -1,9 +1,7 @@
 package org.dominokit.craft.layout.client.presenters;
 
 import org.dominokit.craft.layout.client.views.LayoutView;
-import org.dominokit.craft.layout.shared.extension.CategorySelectedEvent;
-import org.dominokit.craft.layout.shared.extension.LayoutContentChangeEvent;
-import org.dominokit.craft.layout.shared.extension.LayoutContentChangeEventContext;
+import org.dominokit.craft.layout.shared.extension.*;
 import org.dominokit.craft.shared.model.Category;
 import org.dominokit.domino.api.client.annotations.ListenTo;
 import org.dominokit.domino.api.client.annotations.Presenter;
@@ -15,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Presenter
-public class LayoutPresenter extends ViewBaseClientPresenter<LayoutView> {
+public class LayoutPresenter extends ViewBaseClientPresenter<LayoutView> implements LayoutView.LayoutViewUiHandlers {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LayoutPresenter.class);
 
@@ -90,5 +88,11 @@ public class LayoutPresenter extends ViewBaseClientPresenter<LayoutView> {
     @ListenTo(event = LayoutContentChangeEvent.class)
     public void listenToLayoutContentChangeEvent(LayoutContentChangeEventContext contentChangeEventContext) {
         view.setContent(contentChangeEventContext.getContent());
+    }
+
+    @Override
+    public void onNewItemRequested() {
+        fireEvent(NewItemEvent.class, () -> new NewItemEventContext() {
+        });
     }
 }

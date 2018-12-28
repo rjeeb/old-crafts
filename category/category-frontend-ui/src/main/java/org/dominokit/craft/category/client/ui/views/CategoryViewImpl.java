@@ -4,12 +4,9 @@ import elemental2.dom.HTMLDivElement;
 import elemental2.dom.HTMLHeadingElement;
 import org.dominokit.craft.category.client.presenters.CategoryPresenter;
 import org.dominokit.craft.category.client.ui.component.*;
-import org.dominokit.craft.category.client.ui.component.itemform.ItemForm;
 import org.dominokit.craft.category.client.views.CategoryView;
-import org.dominokit.craft.items.client.ui.component.ItemComponent;
 import org.dominokit.craft.items.shared.model.ItemResource;
 import org.dominokit.domino.api.client.annotations.UiView;
-import org.dominokit.domino.ui.button.Button;
 import org.dominokit.domino.ui.chips.Chip;
 import org.dominokit.domino.ui.grid.Column;
 import org.dominokit.domino.ui.grid.Row;
@@ -55,35 +52,25 @@ public class CategoryViewImpl extends BaseElementView<HTMLDivElement> implements
         itemsFlexLayout = FlexLayout.create()
                 .setWrap(FlexWrap.WRAP_TOP_TO_BOTTOM);
 
-//        DominoElement.of(root)
-//                .addCss("category-content")
-//                .appendChild(Row.create()
-//                        .appendChild(Column.span10()
-//                                .offset1()
-//                                .appendChild(titleElement.asElement())
-//                                .appendChild(Button.createDefault("ADD ITEM")
-//                                        .addClickListener(evt -> {
-//                                            DominoElement.of(root)
-//                                                    .clearElement()
-//                                                    .appendChild(new ItemForm());
-//                                        }))
-//                                .appendChild(Row.create()
-//                                        .appendChild(Column.span3()
-//                                                .appendChild(categoryFilterListComponent)
-//                                        )
-//                                        .appendChild(Column.span9()
-//                                                .appendChild(itemsContainer
-//                                                        .add(filtersFlexLayout)
-//                                                )
-//                                                .appendChild(itemsFlexLayout)
-//                                        )
-//                                )
-//                        )
-//                );
-
         DominoElement.of(root)
-                .clearElement()
-                .appendChild(new ItemForm());
+                .addCss("category-content")
+                .appendChild(Row.create()
+                        .appendChild(Column.span10()
+                                .offset1()
+                                .appendChild(titleElement.asElement())
+                                .appendChild(Row.create()
+                                        .appendChild(Column.span3()
+                                                .appendChild(categoryFilterListComponent)
+                                        )
+                                        .appendChild(Column.span9()
+                                                .appendChild(itemsContainer
+                                                        .add(filtersFlexLayout)
+                                                )
+                                                .appendChild(itemsFlexLayout)
+                                        )
+                                )
+                        )
+                );
 
         categoryFilterListComponent.onFilterChanged(filters -> {
             uiHandlers.onFiltersChanged(filters);
@@ -119,11 +106,11 @@ public class CategoryViewImpl extends BaseElementView<HTMLDivElement> implements
 
     @Override
     public void setItems(List<ItemResource> itemResources) {
-        for (ItemResource itemResource : itemResources) {
-            itemsFlexLayout.appendChild(FlexItem.create()
-                    .styler(style -> style.setWidth("250px"))
-                    .appendChild(ItemComponent.create(itemResource)));
-        }
+//        for (ItemResource itemResource : itemResources) {
+//            itemsFlexLayout.appendChild(FlexItem.create()
+//                    .styler(style -> style.setWidth("250px"))
+//                    .appendChild(ItemComponent.create(itemResource)));
+//        }
     }
 
     @Override
