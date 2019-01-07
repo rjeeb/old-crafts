@@ -6,13 +6,11 @@ import org.immutables.value.Value;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
 @Value.Immutable
-@Value.Style(stagedBuilder = true)
-public abstract class Item {
+public abstract class ListingItem {
 
     public abstract String reference();
 
@@ -38,15 +36,20 @@ public abstract class Item {
 
     public abstract List<String> imageReferences();
 
-    public abstract Optional<String> section();
+    @Nullable
+    public abstract String section();
 
-    public abstract Optional<List<String>> tags();
+    @Nullable
+    public abstract List<String> tags();
 
-    public abstract Optional<List<String>> materials();
+    @Nullable
+    public abstract List<String> materials();
 
-    public abstract Optional<List<Variation>> variations();
+    @Nullable
+    public abstract List<Variation> variations();
 
-    public abstract Optional<Personalization> personalization();
+    @Nullable
+    public abstract Personalization personalization();
 
     @Value.Check
     protected void validate() {

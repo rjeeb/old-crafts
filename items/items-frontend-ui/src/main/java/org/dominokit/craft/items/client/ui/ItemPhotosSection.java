@@ -1,9 +1,10 @@
 package org.dominokit.craft.items.client.ui;
 
+import elemental2.dom.File;
 import elemental2.dom.HTMLDivElement;
+import org.dominokit.craft.items.client.views.ItemsView;
 import org.dominokit.craft.items.shared.model.ImageResource;
-import org.dominokit.craft.items.shared.model.ImageResources;
-import org.dominokit.craft.items.shared.model.ImageResources_MapperImpl;
+import org.dominokit.craft.items.shared.model.ImageResource_MapperImpl;
 import org.dominokit.craft.items.shared.model.ItemResource;
 import org.dominokit.domino.ui.cards.Card;
 import org.dominokit.domino.ui.grid.Column;
@@ -13,8 +14,8 @@ import org.dominokit.domino.ui.upload.FileUpload;
 import org.dominokit.domino.ui.utils.BaseDominoElement;
 import org.dominokit.domino.ui.utils.DominoElement;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.jboss.gwt.elemento.core.Elements.*;
@@ -22,7 +23,8 @@ import static org.jboss.gwt.elemento.core.Elements.*;
 public class ItemPhotosSection extends BaseDominoElement<HTMLDivElement, ItemPhotosSection> {
 
     private DominoElement<HTMLDivElement> element = DominoElement.div();
-    private List<ImageResource> uploadedImageResources = new ArrayList<>();
+    private Map<File, ImageResource> imageResources = new HashMap<>();
+    private ItemsView.ItemsViewUiHandlers uiHandlers;
 
     public ItemPhotosSection() {
         element.appendChild(Card.create("Photos", "Add as many as you can so buyers can see every detail.")
@@ -42,11 +44,15 @@ public class ItemPhotosSection extends BaseDominoElement<HTMLDivElement, ItemPho
                                 .appendChild(FileUpload.create()
                                         .setIcon(Icons.ALL.camera_alt())
                                         .multipleFiles()
-                                        .setUrl("http://localhost:8080/images/upload")
+                                        .setUrl("http://localhost:8080/service/images/upload")
                                         .onAddFile(fileItem -> {
+                                            fileItem.addRemoveHandler(file -> {
+                                                uiHandlers.onRemoveImage(imageResources.get(file));
+                                                imageResources.remove(file);
+                                            });
                                             fileItem.addSuccessUploadHandler(request -> {
-                                                ImageResources imageResources = ImageResources_MapperImpl.INSTANCE.read(request.responseText);
-                                                uploadedImageResources.addAll(imageResources.getImageResources());
+                                                ImageResource imageResource = ImageResource_MapperImpl.INSTANCE.read(request.responseText);
+                                                imageResources.put(fileItem.getFile(), imageResource);
                                             });
                                         })
                                         .appendChild(h(3).textContent("Drop files here or click to upload."))
@@ -65,9 +71,13 @@ public class ItemPhotosSection extends BaseDominoElement<HTMLDivElement, ItemPho
     }
 
     public void save(ItemResource itemResource) {
-        itemResource.setImageReferences(uploadedImageResources
+        itemResource.setImageReferences(imageResources.values()
                 .stream()
                 .map(ImageResource::getReference)
                 .collect(Collectors.toList()));
+    }
+
+    public void setUiHandlers(ItemsView.ItemsViewUiHandlers uiHandlers) {
+        this.uiHandlers = uiHandlers;
     }
 }

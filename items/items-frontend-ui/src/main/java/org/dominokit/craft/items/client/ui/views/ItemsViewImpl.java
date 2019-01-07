@@ -21,6 +21,7 @@ public class ItemsViewImpl extends BaseElementView<HTMLDivElement> implements It
     @Override
     public void init(HTMLDivElement root) {
         itemForm = new ItemForm();
+        itemForm.setUiHandlers(uiHandlers);
         DominoElement.of(root)
                 .appendChild(DominoElement.div()
                         .styler(style -> style.setMarginTop("40px"))

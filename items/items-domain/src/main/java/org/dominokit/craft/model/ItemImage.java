@@ -5,17 +5,16 @@ import org.dominokit.craft.items.shared.model.Violation;
 import org.immutables.value.Value;
 
 import java.util.Collections;
-import java.util.Optional;
 
 @Value.Immutable
 public abstract class ItemImage {
 
-    public abstract Optional<String> reference();
-
-    public abstract Optional<String> itemReference();
+    public abstract String reference();
 
     public abstract String path();
 
+    @Nullable
+    public abstract String itemReference();
 
     @Value.Check
     protected void check() {

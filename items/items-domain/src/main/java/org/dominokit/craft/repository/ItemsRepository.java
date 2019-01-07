@@ -1,13 +1,20 @@
 package org.dominokit.craft.repository;
 
-import org.dominokit.craft.model.Item;
-
-import java.util.List;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import org.dominokit.craft.model.ListingItem;
 
 public interface ItemsRepository {
-    Item save(Item item);
+    Single<ListingItem> save(ListingItem listingItem);
 
-    List<Item> findAll();
+    Observable<ListingItem> findAll();
 
-    Item findByTitle(String title);
+    Single<ListingItem> findByReference(String reference);
+
+    class ItemNotFoundException extends RuntimeException {
+
+        public ItemNotFoundException(String reference) {
+            super(reference);
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package org.dominokit.craft.items.client.ui;
 
 import elemental2.dom.HTMLDivElement;
+import org.dominokit.craft.items.client.views.ItemsView;
 import org.dominokit.craft.items.shared.model.ItemResource;
 import org.dominokit.domino.ui.utils.BaseDominoElement;
 import org.dominokit.domino.ui.utils.DominoElement;
@@ -30,5 +31,9 @@ public class ItemForm extends BaseDominoElement<HTMLDivElement, ItemForm> {
         itemDetailsSection.save(itemResource);
         inventoryAndPricingSection.save(itemResource);
         return itemResource;
+    }
+
+    public void setUiHandlers(ItemsView.ItemsViewUiHandlers uiHandlers) {
+        itemPhotosSection.setUiHandlers(uiHandlers);
     }
 }

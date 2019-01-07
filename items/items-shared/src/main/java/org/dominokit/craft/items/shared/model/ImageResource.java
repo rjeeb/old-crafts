@@ -1,6 +1,11 @@
 package org.dominokit.craft.items.shared.model;
 
-public class ImageResource {
+import org.dominokit.domino.api.shared.request.RequestBean;
+import org.dominokit.domino.api.shared.request.ResponseBean;
+import org.dominokit.jacksonapt.annotation.JSONMapper;
+
+@JSONMapper
+public class ImageResource implements RequestBean, ResponseBean {
     private String imagePath;
     private String reference;
 

@@ -1,5 +1,6 @@
 package org.dominokit.craft.items.client.views;
 
+import org.dominokit.craft.items.shared.model.ImageResource;
 import org.dominokit.craft.items.shared.model.ItemResource;
 import org.dominokit.domino.api.client.mvp.view.ContentView;
 import org.dominokit.domino.api.client.mvp.view.HasUiHandlers;
@@ -14,5 +15,7 @@ public interface ItemsView extends ContentView, HasUiHandlers<ItemsViewUiHandler
     interface ItemsViewUiHandlers extends UiHandlers {
 
         void onCreate();
+
+        void onRemoveImage(ImageResource imageResource);
     }
 }

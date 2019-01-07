@@ -5,8 +5,6 @@ import org.dominokit.craft.items.shared.model.Violation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 public abstract class BaseUseCaseTest<U extends BaseUseCase> {
 
     protected U useCase;
@@ -29,7 +27,8 @@ public abstract class BaseUseCaseTest<U extends BaseUseCase> {
 
     @Test
     void givenNullRequestWhenExecuteThenShouldThrowException() {
-        assertThatThrownBy(() -> useCase.execute(null))
-                .isInstanceOf(RequestCannotBeNullException.class);
+        useCase.execute(null)
+                .test()
+                .assertError(RequestCannotBeNullException.class);
     }
 }

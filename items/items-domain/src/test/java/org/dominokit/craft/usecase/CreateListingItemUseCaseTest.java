@@ -1,10 +1,12 @@
 package org.dominokit.craft.usecase;
 
+import io.reactivex.Single;
 import org.dominokit.craft.exception.ImageNotFoundException;
 import org.dominokit.craft.exception.InvalidItemException;
 import org.dominokit.craft.items.shared.model.ItemResource;
+import org.dominokit.craft.mapper.ItemResourceMapper;
 import org.dominokit.craft.model.ImmutableItemImage;
-import org.dominokit.craft.model.ItemImage;
+import org.dominokit.craft.model.ListingItem;
 import org.dominokit.craft.response.CreateItemResponse;
 import org.dominokit.craft.usecase.repository.TestImagesRepository;
 import org.dominokit.craft.usecase.repository.TestItemsRepository;
@@ -12,10 +14,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
-import static org.assertj.core.api.Assertions.*;
+import static java.util.Objects.nonNull;
 
-public class CreateItemUseCaseTest extends BaseUseCaseTest<CreateItemUseCase> {
+public class CreateListingItemUseCaseTest extends BaseUseCaseTest<CreateItemUseCase> {
 
     private static final String EXIST_IMAGE_REFERENCE = "image reference";
     private TestItemsRepository itemsRepository;
@@ -27,14 +30,14 @@ public class CreateItemUseCaseTest extends BaseUseCaseTest<CreateItemUseCase> {
         imagesRepository.save(ImmutableItemImage.builder()
                 .reference(EXIST_IMAGE_REFERENCE)
                 .path("image path")
-                .build());
+                .build()).subscribe();
     }
 
     @Override
     protected CreateItemUseCase createUseCase() {
         itemsRepository = new TestItemsRepository();
         imagesRepository = new TestImagesRepository();
-        return new CreateItemUseCase(itemsRepository, imagesRepository);
+        return new CreateItemUseCase(itemsRepository, imagesRepository, new ItemResourceMapper());
     }
 
     private ItemResource validItemResource() {
@@ -54,17 +57,23 @@ public class CreateItemUseCaseTest extends BaseUseCaseTest<CreateItemUseCase> {
     }
 
     private void assertNullProperty(String property, ItemResource itemResource) {
-        InvalidItemException invalidItemException = (InvalidItemException) catchThrowable(() -> useCase.execute(itemResource));
-        assertThat(invalidItemException.getViolations()).isNotEmpty();
-        assertThat(invalidItemException.getViolations())
-                .containsExactly(createViolation(property, property + ".is.null"));
+        useCase.execute(itemResource)
+                .test()
+                .assertError(throwable -> {
+                    InvalidItemException invalidItemException = (InvalidItemException) throwable;
+                    return !invalidItemException.getViolations().isEmpty() && invalidItemException.getViolations()
+                            .contains(createViolation(property, property + ".is.null"));
+                });
     }
 
     private void assertInvalidProperty(String property, ItemResource itemResource) {
-        InvalidItemException invalidItemException = (InvalidItemException) catchThrowable(() -> useCase.execute(itemResource));
-        assertThat(invalidItemException.getViolations()).isNotEmpty();
-        assertThat(invalidItemException.getViolations())
-                .containsExactly(createViolation(property, property + ".is.invalid"));
+        useCase.execute(itemResource)
+                .test()
+                .assertError(throwable -> {
+                    InvalidItemException invalidItemException = (InvalidItemException) throwable;
+                    return !invalidItemException.getViolations().isEmpty() && invalidItemException.getViolations()
+                            .contains(createViolation(property, property + ".is.invalid"));
+                });
     }
 
     @Test
@@ -145,51 +154,72 @@ public class CreateItemUseCaseTest extends BaseUseCaseTest<CreateItemUseCase> {
     void givenNegativePriceWhenCreateThenShouldThrowExceptionWithViolation() {
         ItemResource itemResource = validItemResource();
         itemResource.setAmount(-2.5);
-        InvalidItemException invalidItemException = (InvalidItemException) catchThrowable(() -> useCase.execute(itemResource));
-        assertThat(invalidItemException.getViolations()).containsExactly(createViolation("price", "price.is.invalid"));
+        useCase.execute(itemResource)
+                .test()
+                .assertError(throwable -> {
+                    InvalidItemException invalidItemException = (InvalidItemException) throwable;
+                    return invalidItemException.getViolations().contains(createViolation("price", "price.is.invalid"));
+                });
     }
 
     @Test
     void givenNegativeQuantityWhenCreateThenShouldThrowExceptionWithViolation() {
         ItemResource itemResource = validItemResource();
         itemResource.setQuantity(-2);
-        InvalidItemException invalidItemException = (InvalidItemException) catchThrowable(() -> useCase.execute(itemResource));
-        assertThat(invalidItemException.getViolations()).containsExactly(createViolation("quantity", "quantity.is.invalid"));
+        useCase.execute(itemResource)
+                .test()
+                .assertError(throwable -> {
+                    InvalidItemException invalidItemException = (InvalidItemException) throwable;
+                    return invalidItemException.getViolations().contains(createViolation("quantity", "quantity.is.invalid"));
+                });
     }
 
     @Test
     void givenValidItemWhenCreateThenItemShouldBeExistInTheRepository() {
         ItemResource itemResource = validItemResource();
-        useCase.execute(itemResource);
-        assertThat(itemsRepository.findByTitle(itemResource.getTitle())).isNotNull();
+        useCase.execute(itemResource).test()
+                .assertOf(observer -> {
+                    CreateItemResponse response = observer.values().get(0);
+                    Single<ListingItem> itemSingle = itemsRepository.findByReference(response.getCreatedItem().getReference());
+                    itemSingle.test().assertValue(Objects::nonNull);
+                });
     }
 
     @Test
     void givenValidItemWhenCreateThenShouldReturnItemWithId() {
         ItemResource itemResource = validItemResource();
-        CreateItemResponse response = useCase.execute(itemResource);
-        ItemResource result = response.getCreatedItem();
-        assertThat(result).isNotNull();
-        assertThat(result.getReference()).isNotEmpty();
+        useCase.execute(itemResource)
+                .test()
+                .assertValue(response -> {
+                    ItemResource createdItem = response.getCreatedItem();
+                    return nonNull(createdItem) && nonNull(createdItem.getReference());
+                });
     }
 
     @Test
     void givenItemResourceWithNonExistImageReferenceWhenExecuteThenShouldThrowException() {
         ItemResource itemResource = validItemResource();
         itemResource.setImageReferences(Collections.singletonList("non exist image reference"));
-        assertThatThrownBy(() -> useCase.execute(itemResource))
-                .isInstanceOf(ImageNotFoundException.class)
-                .hasMessage("non exist image reference");
+        useCase.execute(itemResource)
+                .test()
+                .assertError(ImageNotFoundException.class)
+                .assertErrorMessage("non exist image reference");
     }
 
     @Test
     void givenItemResourceWithExistImageReferenceWhenExecuteThenImageShouldLinkImageWithItem() {
         ItemResource itemResource = validItemResource();
-        CreateItemResponse response = useCase.execute(itemResource);
-        ItemImage itemImage = imagesRepository.findByReference(EXIST_IMAGE_REFERENCE);
-        assertThat(itemImage.itemReference().get())
-                .isEqualTo(response.getCreatedItem().getReference());
-        assertThat(response.getCreatedItem().getImageReferences())
-                .containsExactly(EXIST_IMAGE_REFERENCE);
+        CreateItemResponse response = useCase.execute(itemResource)
+                .test()
+                .values()
+                .get(0);
+
+        imagesRepository.findByReference(EXIST_IMAGE_REFERENCE)
+                .test()
+                .assertValue(itemImage -> {
+                    boolean equalsReference = itemImage.itemReference().equals(response.getCreatedItem().getReference());
+                    boolean containsReference = response.getCreatedItem().getImageReferences().contains(EXIST_IMAGE_REFERENCE);
+                    return equalsReference && containsReference;
+                });
     }
 }

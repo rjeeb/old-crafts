@@ -1,30 +1,37 @@
 package org.dominokit.craft.usecase.repository;
 
-import org.dominokit.craft.model.Item;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import org.dominokit.craft.model.ListingItem;
 import org.dominokit.craft.repository.ItemsRepository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TestItemsRepository implements ItemsRepository {
 
-    private Map<String, Item> items = new HashMap<>();
+    private Map<String, ListingItem> items = new HashMap<>();
 
     @Override
-    public Item save(Item item) {
-        items.put(item.title(), item);
-        return item;
+    public Single<ListingItem> save(ListingItem listingItem) {
+        return Single.just(listingItem)
+                .doOnSuccess(this::doSave);
+    }
+
+    private ListingItem doSave(ListingItem listingItem1) {
+        return items.put(listingItem1.reference(), listingItem1);
     }
 
     @Override
-    public List<Item> findAll() {
-        return new ArrayList<>(items.values());
+    public Observable<ListingItem> findAll() {
+        return Observable.fromIterable(items.values());
     }
 
     @Override
-    public Item findByTitle(String title) {
-        return items.getOrDefault(title, null);
+    public Single<ListingItem> findByReference(String reference) {
+        if (items.containsKey(reference)) {
+            return Single.just(items.get(reference));
+        }
+        return Single.error(new ItemNotFoundException(reference));
     }
 }

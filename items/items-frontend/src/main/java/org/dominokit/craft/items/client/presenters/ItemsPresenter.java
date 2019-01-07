@@ -1,7 +1,9 @@
 package org.dominokit.craft.items.client.presenters;
 
+import elemental2.dom.DomGlobal;
 import org.dominokit.craft.items.client.requests.ItemsRequestsFactory;
 import org.dominokit.craft.items.client.views.ItemsView;
+import org.dominokit.craft.items.shared.model.ImageResource;
 import org.dominokit.craft.items.shared.model.ItemResource;
 import org.dominokit.craft.layout.shared.extension.LayoutContentChangeEvent;
 import org.dominokit.craft.layout.shared.extension.NewItemEvent;
@@ -34,6 +36,19 @@ public class ItemsPresenter extends ViewBaseClientPresenter<ItemsView> implement
                 })
                 .onFailed(failedResponse -> {
                     LOGGER.error("failed to create", failedResponse.getThrowable());
+                })
+                .send();
+    }
+
+    @Override
+    public void onRemoveImage(ImageResource imageResource) {
+        ItemsRequestsFactory.INSTANCE
+                .removeImage(imageResource)
+                .onSuccess(response -> {
+                    DomGlobal.console.info("success remove");
+                })
+                .onFailed(failedResponse -> {
+                    DomGlobal.console.error("failed to remove image", failedResponse.getThrowable());
                 })
                 .send();
     }
